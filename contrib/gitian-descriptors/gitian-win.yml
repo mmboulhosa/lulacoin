@@ -1,5 +1,5 @@
 ---
-name: "icash"
+name: "lulacoin"
 suites:
 - "precise"
 architectures:
