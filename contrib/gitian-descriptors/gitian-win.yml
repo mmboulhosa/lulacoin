@@ -19,8 +19,8 @@ packages:
 
 reference_datetime: "2014-01-10 00:00:00"
 remotes:
-- "url": "https://github.com/icash/icash.git"
-  "dir": "icash"
+- "url": "https://github.com/mmboulhosa/lulacoin.git"
+  "dir": "lulacoin"
 files:
 - "qt-win32-5.2.0-gitian-r3.zip"
 - "qt-win64-5.2.0-gitian-r3.zip"
