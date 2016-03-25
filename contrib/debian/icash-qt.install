@@ -1,0 +1,6 @@
+usr/local/bin/lulacoin-qt usr/bin
+share/pixmaps/lulacoin32.xpm usr/share/pixmaps
+share/pixmaps/lulacoin16.xpm usr/share/pixmaps
+share/pixmaps/lulacoin128.png usr/share/pixmaps
+debian/lulacoin-qt.desktop usr/share/applications
+debian/lulacoin-qt.protocol usr/share/kde4/services/
