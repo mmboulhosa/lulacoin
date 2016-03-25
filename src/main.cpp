@@ -1429,75 +1429,32 @@ double ConvertBitsToDouble(unsigned int nBits)
 
 int64_t GetBlockValue(int nBits, int nHeight, int64_t nFees)
 {
-    double dDiff = (double)0x0000ffff / (double)(nBits & 0x00ffffff);
-
-    /* fixed bug caused diff to not be correctly calculated */
-    if(nHeight > 3 || TestNet()) dDiff = ConvertBitsToDouble(nBits);
-
     int64_t nSubsidy = 0;
-   if(nHeight >= 51600) 
-   // {
-   //     if((nHeight >= 17000 && dDiff > 75) || nHeight >= 24000)
-	{ // GPU/ASIC difficulty calc
-            // 222222222/(((x+2600)/9)^2)
-            nSubsidy = (22222222.0 / (pow((dDiff+2600.0)/9.0,2.0)));
-            if (nSubsidy > 266) nSubsidy = 266;
-            if (nSubsidy < 1) nSubsidy = 1;
-        } else { // CPU mining calc
-            nSubsidy = (222222222.0 / (pow((dDiff+2600.0)/9.0,2.0)));
-           if (nSubsidy > 2662) nSubsidy = 2662;
-            if (nSubsidy < 1) nSubsidy = 1;
-        }
-   // } else {
-//        nSubsidy = (1111.0 / (pow((dDiff+1.0),2.0)));
-//        if (nSubsidy > 500) nSubsidy = 500;
-//        if (nSubsidy < 1) nSubsidy = 1;
-//    }
-
-    // LogPrintf("height %u diff %4.2f reward %i \n", nHeight, dDiff, nSubsidy);
-    nSubsidy *= COIN;
-
-    if(TestNet()){
-        for(int i = 46200; i <= nHeight; i += 210240) nSubsidy -= nSubsidy/14;
-    } else {
-        // yearly decline of production by 7.1% per year, projected 21.3M coins max by year 2050.
-        for(int i = 210240; i <= nHeight; i += 210240) nSubsidy -= nSubsidy/14;
+    if(nHeight == 0) {
+        nSubsidy = 1 * COIN;
     }
-
+    if(nHeight == 9) {
+        nSubsidy = 60000 * COIN;
+    }
+    else if(nHeight < 86400 && nHeight > 0) {
+        nSubsidy = 500 * COIN;
+    }
+    else if(nHeight < 259200 && nHeight >= 86400) {
+        nSubsidy = 250 * COIN;
+    }
+    else {
+        nSubsidy = 125 * COIN; 
+    }       
+        
     return nSubsidy + nFees;
 }
 
 int64_t GetMasternodePayment(int nHeight, int64_t blockValue)
 {
-    int64_t ret = blockValue/5; // start at 20%
-
-    if(TestNet()) {
-        if(nHeight > 46000)             ret += blockValue / 20; //25% - 2014-10-07
-        if(nHeight > 46000+((576*1)*1)) ret += blockValue / 20; //30% - 2014-10-08
-        if(nHeight > 46000+((576*1)*2)) ret += blockValue / 20; //35% - 2014-10-09
-        if(nHeight > 46000+((576*1)*3)) ret += blockValue / 20; //40% - 2014-10-10
-        if(nHeight > 46000+((576*1)*4)) ret += blockValue / 20; //45% - 2014-10-11
-        if(nHeight > 46000+((576*1)*5)) ret += blockValue / 20; //50% - 2014-10-12
-        if(nHeight > 46000+((576*1)*6)) ret += blockValue / 20; //55% - 2014-10-13
-        if(nHeight > 46000+((576*1)*7)) ret += blockValue / 20; //60% - 2014-10-14
-    }
-
-    if(nHeight > 17280)               ret += blockValue / 20; // 158000 - 25.0% - 2014-10-24
-    if(nHeight > 17280+((576*30)* 1)) ret += blockValue / 20; // 175280 - 30.0% - 2014-11-25
-    if(nHeight > 17280+((576*30)* 2)) ret += blockValue / 20; // 192560 - 35.0% - 2014-12-26
-    if(nHeight > 17280+((576*30)* 3)) ret += blockValue / 40; // 209840 - 37.5% - 2015-01-26
-    if(nHeight > 17280+((576*30)* 4)) ret += blockValue / 40; // 227120 - 40.0% - 2015-02-27
-    if(nHeight > 17280+((576*30)* 5)) ret += blockValue / 40; // 244400 - 42.5% - 2015-03-30
-    if(nHeight > 17280+((576*30)* 6)) ret += blockValue / 40; // 261680 - 45.0% - 2015-05-01
-    if(nHeight > 17280+((576*30)* 7)) ret += blockValue / 40; // 278960 - 47.5% - 2015-06-01
-    if(nHeight > 17280+((576*30)* 9)) ret += blockValue / 40; // 313520 - 50.0% - 2015-08-03
-    if(nHeight > 17280+((576*30)*11)) ret += blockValue / 40; // 348080 - 52.5% - 2015-10-05
-    if(nHeight > 17280+((576*30)*13)) ret += blockValue / 40; // 382640 - 55.0% - 2015-12-07
-    if(nHeight > 17280+((576*30)*15)) ret += blockValue / 40; // 417200 - 57.5% - 2016-02-08
-    if(nHeight > 17280+((576*30)*17)) ret += blockValue / 40; // 451760 - 60.0% - 2016-04-11
-
+    int64_t ret = blockValue/5; // flat 20%
     return ret;
 }
+
 
 static const int64_t nTargetTimespan = 24 * 60 * 60; // iCash: 1 day
 static const int64_t nTargetSpacing = 2.5 * 60; // iCash: 2.5 minutes
