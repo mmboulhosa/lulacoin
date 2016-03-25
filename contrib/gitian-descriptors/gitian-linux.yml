@@ -1,5 +1,5 @@
 ---
-name: "icash"
+name: "lulacoin"
 suites:
 - "precise"
 architectures:
@@ -22,8 +22,8 @@ packages:
 - "libqt4-test"
 reference_datetime: "2014-01-10 00:00:00"
 remotes:
-- "url": "https://github.com/icash/icash.git"
-  "dir": "icash"
+- "url": "https://github.com/mmboulhosa/lulacoin.git"
+  "dir": "lulacoin"
 files:
 - "bitcoin-deps-linux32-gitian-r9.zip"
 - "bitcoin-deps-linux64-gitian-r9.zip"
