@@ -38,10 +38,10 @@ public:
         nDefaultPort = 5555;
         nRPCPort = 5554;
         bnProofOfWorkLimit = CBigNum(~uint256(0) >> 20);  // iCash starting difficulty is 1 / 2^12
-        nSubsidyHalvingInterval = 210000;
+        //nSubsidyHalvingInterval = 210000;
 
         // Genesis block
-        const char* pszTimestamp = "Nobody can give you freedom Nobody can give you equality or justice or anything You take it";
+        const char* pszTimestamp = "PSZ here";
         CTransaction txNew;
         txNew.vin.resize(1);
         txNew.vout.resize(1);
@@ -52,17 +52,17 @@ public:
         genesis.hashPrevBlock = 0;
         genesis.hashMerkleRoot = genesis.BuildMerkleTree();
         genesis.nVersion = 1;
-        genesis.nTime    = 1426791863;
-        genesis.nBits    = 0x1e0ffff0;
-        genesis.nNonce   = 935108;
+        genesis.nTime    = 0;
+        genesis.nBits    = 0;
+        genesis.nNonce   = 0;
 
         hashGenesisBlock = genesis.GetHash();
-        assert(hashGenesisBlock == uint256("0x000006a63aa14e3e92326794b94a80fe35363b08dba7a5739c72abca50325e7c"));
-        assert(genesis.hashMerkleRoot == uint256("0xa0a667925ae1db124b7edc3c15867fca166f1d02cb8112ca1bfa88b98e7ac4dc"));
+        assert(hashGenesisBlock == uint256("0x"));
+        assert(genesis.hashMerkleRoot == uint256("0x"));
 
-        vSeeds.push_back(CDNSSeedData("", ""));
-        vSeeds.push_back(CDNSSeedData("", ""));
-        vSeeds.push_back(CDNSSeedData("", ""));
+        vSeeds.push_back(CDNSSeedData("minedowns.ga", "minedowns.ga"));
+        vSeeds.push_back(CDNSSeedData("185.28.22.159", "185.28.22.159"));
+        vSeeds.push_back(CDNSSeedData("node1.lulacoin.ga", "node1.lulacoin.ga"));
 
         base58Prefixes[PUBKEY_ADDRESS] = list_of( 102);                    // iCash addresses start with 'i'
         base58Prefixes[SCRIPT_ADDRESS] = list_of( 21);                    // iCash script addresses start with '9'
@@ -124,7 +124,7 @@ public:
         genesis.nNonce = 935108;
 
         hashGenesisBlock = genesis.GetHash();
-        assert(hashGenesisBlock == uint256("0x000006a63aa14e3e92326794b94a80fe35363b08dba7a5739c72abca50325e7c"));
+        assert(hashGenesisBlock == uint256("0x"));
 
         vFixedSeeds.clear();
         vSeeds.clear();
@@ -166,7 +166,7 @@ public:
         strDataDir = "regtest";
 
         hashGenesisBlock = genesis.GetHash();
-        assert(hashGenesisBlock == uint256("0x000006a63aa14e3e92326794b94a80fe35363b08dba7a5739c72abca50325e7c"));
+        assert(hashGenesisBlock == uint256("0x"));
 
         vSeeds.clear();  // Regtest mode doesn't have any DNS seeds.
     }
